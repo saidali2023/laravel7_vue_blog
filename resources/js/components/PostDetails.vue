@@ -3,7 +3,7 @@
     <div class="">
 
         <!-- Title -->
-        <h1 class="mt-4">{{post.title}}gggg</h1>
+        <h1 class="mt-4">{{post.title}}</h1>
 
         <!-- Author -->
         <p class=" alert alert-info" style="width: fit-content;
@@ -73,16 +73,23 @@ export default {
    },
    methods:{
      getPost(){
+
       axios.get('/api/posts/'+this.$route.params.slug)
       .then(res =>{
-        console.log(res)
+        // console.log(res)
+        // console.log(this.$route.params.slug)
         this.post = res.data
         this.post_id = this.post.id;
         this.comments = this.post.comments
+        console.log('fffffggghhh');
+        console.log(res.data);
+        console.log('fffffggghhh');
       })
       .catch(err =>{
         console.log(err)
       })
+
+
      },
      addComment(){
        let {body,post_id} = this;
