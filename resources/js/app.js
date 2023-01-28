@@ -26,6 +26,9 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('global-posts', require('./components/Posts.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('register', require('./components/Register.vue').default);
+Vue.component('login', require('./components/Login.vue').default);
+
 
 Vue.component('global-home', require('./components/GlobalHome.vue').default);
 Vue.component('global-details', require('./components/PostDetails.vue').default);
