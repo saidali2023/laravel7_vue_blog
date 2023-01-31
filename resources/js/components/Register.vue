@@ -80,7 +80,8 @@ export default {
          },
          isValidForm(){
              return this.name.length > 4   &&
-             this.password.length > 5 && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))
+             this.password.length > 5 &&
+             (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))
          }
      },
      methods:{
@@ -92,7 +93,8 @@ export default {
            //this.$store.state.userToken = "amine"
 
            //this.$store.commit('setUserToken',{userToken:'sdmfjsdkfjlsds'})
-            //console.log(this.$store.getters.isLogged)
+            // console.log(this.$store.getters.isLogged)
+            // console.log(this.$store.state.userToken);
             let  {name,email,password} = this;
             this.$store.dispatch('RegisterUser',{name,email,password})
 

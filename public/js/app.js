@@ -2062,14 +2062,10 @@ __webpack_require__.r(__webpack_exports__);
     getPost: function getPost() {
       var _this = this;
       axios.get('/api/posts/' + this.$route.params.slug).then(function (res) {
-        // console.log(res)
-        // console.log(this.$route.params.slug)
+        console.log(res);
         _this.post = res.data;
         _this.post_id = _this.post.id;
         _this.comments = _this.post.comments;
-        console.log('fffffggghhh');
-        console.log(res.data);
-        console.log('fffffggghhh');
       })["catch"](function (err) {
         console.log(err);
       });
@@ -2206,7 +2202,8 @@ __webpack_require__.r(__webpack_exports__);
       //this.$store.state.userToken = "amine"
 
       //this.$store.commit('setUserToken',{userToken:'sdmfjsdkfjlsds'})
-      //console.log(this.$store.getters.isLogged)
+      // console.log(this.$store.getters.isLogged)
+      // console.log(this.$store.state.userToken);
       var name = this.name,
         email = this.email,
         password = this.password;
@@ -55779,9 +55776,78 @@ Vue.component('global-details', __webpack_require__(/*! ./components/PostDetails
 
 
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: {
+    userToken: null,
+    user: null,
+    EditedPost: {}
+  },
+  getters: {
+    //center
+    isLogged: function isLogged(state) {
+      return !!state.userToken;
+    },
+    isAdmin: function isAdmin(state) {
+      if (state.user) {
+        return state.user.is_admin;
+      }
+      return null;
+    },
+    PostToEdit: function PostToEdit(state) {
+      return state.EditedPost;
+    }
+  },
+  mutations: {
+    setUserToken: function setUserToken(state, userToken) {
+      state.userToken = userToken;
+      localStorage.setItem('userToken', JSON.stringify(userToken));
+      axios.defaults.headers.common.Authorization = "Bearer ".concat(userToken);
+    },
+    removeUserToken: function removeUserToken(state) {
+      state.userToken = null;
+      localStorage.removeItem('userToken');
+    },
+    setUser: function setUser(state, user) {
+      state.user = user;
+    },
+    logout: function logout(state) {
+      state.userToken = null;
+      localStorage.removeItem('userToken');
+      window.location.pathname = "/";
+    },
+    EditPost: function EditPost(state, post) {
+      state.EditedPost = post;
+    }
+  },
+  actions: {
+    RegisterUser: function RegisterUser(_ref, payload) {
+      var commit = _ref.commit;
+      axios.post('/api/register', payload).then(function (res) {
+        console.log(res);
+        commit('setUserToken', res.data.token);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    LoginUser: function LoginUser(_ref2, payload) {
+      var commit = _ref2.commit;
+      axios.post('/api/login', payload).then(function (res) {
+        console.log(res);
+        commit('setUserToken', res.data.token);
+        axios.get('/api/user').then(function (res) {
+          //console.log(res.data)
+          commit('setUser', res.data.user);
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }
+});
 var app = new Vue({
   el: '#app',
-  router: _routes_routes__WEBPACK_IMPORTED_MODULE_0__["default"]
+  router: _routes_routes__WEBPACK_IMPORTED_MODULE_0__["default"],
+  store: store
 });
 
 /***/ }),

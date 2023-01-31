@@ -73,23 +73,16 @@ export default {
    },
    methods:{
      getPost(){
-
       axios.get('/api/posts/'+this.$route.params.slug)
       .then(res =>{
-        // console.log(res)
-        // console.log(this.$route.params.slug)
+        console.log(res)
         this.post = res.data
         this.post_id = this.post.id;
         this.comments = this.post.comments
-        console.log('fffffggghhh');
-        console.log(res.data);
-        console.log('fffffggghhh');
       })
       .catch(err =>{
         console.log(err)
       })
-
-
      },
      addComment(){
        let {body,post_id} = this;
